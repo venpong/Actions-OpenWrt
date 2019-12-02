@@ -1,8 +1,8 @@
 #=================================================
-#   Description: Build OpenWrt using GitHub Actions
-#   Lisence: MIT
-#   Author: P3TERX
-#   Blog: https://p3terx.com
+# Description: Build OpenWrt using GitHub Actions
+# Lisence: MIT
+# Author: P3TERX
+# Blog: https://p3terx.com
 #=================================================
 
 name: Build OpenWrt
@@ -13,6 +13,8 @@ on:
   push:
     branches: 
       - master
+    paths:
+      - '.config'
 #  schedule:
 #    - cron: 0 8 * * 5
 #  watch:
@@ -55,7 +57,10 @@ jobs:
         sudo -E apt-get clean
 
     - name: Clone source code
-      run: git clone https://github.com/coolsnowwolf/lede openwrt
+      env: 
+        REPO_URL: https://github.com/coolsnowwolf/lede
+        REPO_BRANCH: master
+      run: git clone --depth 1 $REPO_URL -b $REPO_BRANCH openwrt
 
     - name: Update feeds
       run: cd openwrt && ./scripts/feeds update -a
@@ -64,9 +69,11 @@ jobs:
       run: cd openwrt && ./scripts/feeds install -a
 
     - name: Load custom configuration
+      env:
+        CONFIG_FILE: '.config'
       run: |
         [ -e files ] && mv files openwrt/files
-        [ -e .config ] && mv .config openwrt
+        [ -e $CONFIG_FILE ] && mv $CONFIG_FILE openwrt/.config
         chmod +x diy.sh
         cd openwrt
         ../diy.sh
