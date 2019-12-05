@@ -10,9 +10,9 @@ name: Build OpenWrt
 on: 
   release:
     types: [published]
-  push:
-    branches: 
-      - wpr003n
+  # push:
+   # branches: 
+    #  - wpr003n
     paths:
       - '.config'
 #  schedule:
