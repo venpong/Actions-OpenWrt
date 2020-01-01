@@ -6,7 +6,7 @@
 # Blog: https://p3terx.com
 #=================================================
 # Modify default IP
-sed -i 's/192.168.1.1/192.168.11.1/g' package/base-files/files/bin/config_generate
+# sed -i 's/192.168.1.1/192.168.11.1/g' package/base-files/files/bin/config_generate
 
 #echo '修改机器名称'
 #sed -i 's/OpenWrt/G-DOCK/g' package/base-files/files/bin/config_generate
@@ -28,7 +28,7 @@ sed -i 's/192.168.1.1/192.168.11.1/g' package/base-files/files/bin/config_genera
 #ln -s ../../../luci-theme-argon ./package/lean/
 
 #echo '修改wifi名称'
-sed -i 's/OpenWrt/ASUS/g' package/kernel/mac80211/files/lib/wifi/mac80211.sh
+#sed -i 's/OpenWrt/ASUS/g' package/kernel/mac80211/files/lib/wifi/mac80211.sh
 
 #echo '修改banner'
 #rm -rf package/base-files/files/etc/banner
