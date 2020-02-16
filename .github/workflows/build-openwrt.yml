@@ -1,4 +1,5 @@
 #=================================================
+# https://github.com/P3TERX/Actions-OpenWrt
 # Description: Build OpenWrt using GitHub Actions
 # Lisence: MIT
 # Author: P3TERX
@@ -7,9 +8,10 @@
 
 name: Build OpenWrt
 
-on: 
+on:
   release:
     types: [published]
+<<<<<<< HEAD
   # push:
     # branches: 
      #  - master
@@ -20,9 +22,20 @@ on:
 #  watch:
 #    types: [started]
 
+env:
+  REPO_URL: https://github.com/coolsnowwolf/lede
+  REPO_BRANCH: master
+  CONFIG_FILE: .config
+  DIY_SH: diy.sh
+  FREE_UP_DISK: false
+  SSH_ACTIONS: false
+  UPLOAD_BIN_DIR: false
+  UPLOAD_FIRMWARE: true
+  TZ: Asia/Shanghai
+
 jobs:
   build:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
 
     steps:
     - name: Checkout
@@ -32,29 +45,22 @@ jobs:
       env:
         DEBIAN_FRONTEND: noninteractive
       run: |
+        sudo swapoff /swapfile
+        sudo rm -rf /swapfile /etc/apt/sources.list.d/*
+        sudo -E apt-get -qq update
+        sudo -E apt-get -qq install build-essential asciidoc binutils bzip2 gawk gettext git libncurses5-dev libz-dev patch unzip zlib1g-dev lib32gcc1 libc6-dev-i386 subversion flex uglifyjs git-core gcc-multilib p7zip p7zip-full msmtp libssl-dev texinfo libglib2.0-dev xmlto qemu-utils upx libelf-dev autoconf automake libtool autopoint device-tree-compiler
+        curl -fsSL https://raw.githubusercontent.com/P3TERX/dotfiles/master/.bashrc >> ~/.bashrc
+
+    - name: Free up disk space
+      if: env.FREE_UP_DISK == 'true'
+      env:
+        DEBIAN_FRONTEND: noninteractive
+      run: |
+        sudo rm -rf /usr/share/dotnet
         docker rmi `docker images -q`
-        echo "Deleting files, please wait ..."
-        sudo rm -rf \
-          /usr/share/dotnet \
-          /etc/mysql \
-          /etc/php
-        sudo -E apt-get -y purge \
-          azure-cli \
-          ghc* \
-          zulu* \
-          hhvm \
-          llvm* \
-          firefox \
-          google* \
-          dotnet* \
-          powershell \
-          openjdk* \
-          mysql* \
-          php*
-        sudo -E apt-get update
-        sudo -E apt-get -y install build-essential asciidoc binutils bzip2 gawk gettext git libncurses5-dev libz-dev patch unzip zlib1g-dev lib32gcc1 libc6-dev-i386 subversion flex uglifyjs git-core gcc-multilib p7zip p7zip-full msmtp libssl-dev texinfo libglib2.0-dev xmlto qemu-utils upx libelf-dev autoconf automake libtool autopoint device-tree-compiler
-        sudo -E apt-get -y autoremove --purge
-        sudo -E apt-get clean
+        sudo -E apt-get -q purge azure-cli ghc* zulu* hhvm llvm* firefox google* dotnet* powershell openjdk* mysql* php*
+        sudo -E apt-get -qq autoremove --purge
+        sudo -E apt-get -qq clean
 
     - name: Clone source code
       env: 
@@ -69,9 +75,6 @@ jobs:
       run: cd openwrt && ./scripts/feeds install -a
 
     - name: Load custom configuration
-      env:
-        CONFIG_FILE: '.config'
-        DIY_SH: 'diy.sh'
       run: |
         [ -e files ] && mv files openwrt/files
         [ -e $CONFIG_FILE ] && mv $CONFIG_FILE openwrt/.config
@@ -80,37 +83,45 @@ jobs:
         ../$DIY_SH
         make defconfig
 
-#    - name: SSH connection to Actions
-#      uses: P3TERX/debugger-action@master
+    - name: SSH connection to Actions
+      uses: P3TERX/debugger-action@master
+      if: env.SSH_ACTIONS == 'true'
 
     - name: Download package
+      id: package
       run: |
-        cd openwrt && make download -j8
+        cd openwrt
+        make download -j8
         find dl -size -1024c -exec ls -l {} \;
         find dl -size -1024c -exec rm -f {} \;
 
-    - name: Multi-thread compile
+    - name: Compile the firmware
+      id: compile
       run: |
         cd openwrt
         echo -e "$(nproc) thread compile"
-        make -j$(nproc)
+        make -j$(nproc) || make -j1 V=s
+        echo "::set-output name=status::success"
 
-    - name: Single-thread compile
-      if: failure()
+    - name: Upload bin directory
+      uses: actions/upload-artifact@master
+      if: steps.compile.outputs.status == 'success' && env.UPLOAD_BIN_DIR == 'true'
+      with:
+        name: OpenWrt_directory
+        path: openwrt/bin
+
+    - name: Organize files
+      id: organize
+      if: env.UPLOAD_FIRMWARE == 'true' && !cancelled()
       run: |
-        cd openwrt
-        make -j1 V=s
+        cd openwrt/bin/targets/*/*
+        rm -rf packages
+        echo "::set-env name=FIRMWARE::$(pwd)"
+        echo "::set-output name=status::success"
 
-    - name : Upload packages
+    - name: Upload firmware directory
       uses: actions/upload-artifact@master
-      if: always()
+      if: steps.organize.outputs.status == 'success' && !cancelled()
       with:
-        name: OpenWrt packages
-        path: openwrt/bin/packages
-
-    - name : Upload targets
-      uses: actions/upload-artifact@master
-      if: always()
-      with:
-        name: OpenWrt firmware
-        path: openwrt/bin/targets
+        name: OpenWrt_firmware
+        path: ${{ env.FIRMWARE }}
