@@ -2,6 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="134a433e-e50c-4ed8-9f65-b7c3ab821832" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/Actions-OpenWrt.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.github/workflows/build-openwrt.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/build-openwrt.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -39,7 +45,7 @@
       <updated>1583996394126</updated>
       <workItem from="1583996397503" duration="1040000" />
       <workItem from="1583997775819" duration="334000" />
-      <workItem from="1583998137603" duration="290000" />
+      <workItem from="1583998137603" duration="611000" />
     </task>
     <task id="LOCAL-00001" summary="fix">
       <created>1583998387583</created>

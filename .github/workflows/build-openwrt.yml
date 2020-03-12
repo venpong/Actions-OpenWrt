@@ -22,7 +22,7 @@ on:
 #    types: started
 
 env:
-  REPO_URL: https://github.com/venpong/lede
+  REPO_URL: https://github.com/venpong/lede.git
   REPO_BRANCH: r9/r9_final
   CONFIG_FILE: .config
   DIY_SH: diy.sh
