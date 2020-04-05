@@ -7,10 +7,10 @@
 #=================================================
 
 #echo '修改机器名称'
-#sed -i 's/OpenWrt/ACRH-17/g' package/base-files/files/bin/config_generate
+#sed -i 's/OpenWrt/ASUS/g' package/base-files/files/bin/config_generate
 
 #echo '修改网关地址'
-#sed -i 's/192.168.1.1/192.168.2.1/g' package/base-files/files/bin/config_generate
+sed -i 's/192.168.1.1/192.168.11.1/g' package/base-files/files/bin/config_generate
 
 #echo '修改时区'
 #sed -i "s/'UTC'/'CST-8'\n        set system.@system[-1].zonename='Asia\/Shanghai'/g" package/base-files/files/bin/config_generate
@@ -26,7 +26,7 @@
 #ln -s ../../../luci-theme-argon ./package/lean/
 
 #echo '修改wifi名称'
-sed -i 's/OpenWrt/ASUS/g' package/kernel/mac80211/files/lib/wifi/mac80211.sh
+sed -i 's/OpenWrt/HiWiFi/g' package/kernel/mac80211/files/lib/wifi/mac80211.sh
 
 #echo '修改banner'
 #rm -rf package/base-files/files/etc/banner
