@@ -24,7 +24,7 @@ on:
 
 env:
   REPO_URL: https://github.com/venpong/lede.git
-  REPO_BRANCH: r9/master_wpr003n
+  REPO_BRANCH: master_wpr003n
   CONFIG_FILE: .config
   DIY_SH: diy.sh
   SSH_ACTIONS: false
