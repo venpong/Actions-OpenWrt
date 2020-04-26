@@ -26,7 +26,7 @@
 #ln -s ../../../luci-theme-argon ./package/lean/
 
 #echo '修改wifi名称'
-#sed -i 's/OpenWrt/ASUS/g' package/kernel/mac80211/files/lib/wifi/mac80211.sh
+sed -i 's/OpenWrt/ASUS/g' package/kernel/mac80211/files/lib/wifi/mac80211.sh
 
 #echo '修改banner'
 #rm -rf package/base-files/files/etc/banner
