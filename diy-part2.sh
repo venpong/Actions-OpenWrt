@@ -26,17 +26,17 @@
 #ln -s ../../../luci-theme-argon ./package/lean/
 
 #echo '修改wifi名称'
-#sed -i 's/OpenWrt/ASUS/g' package/kernel/mac80211/files/lib/wifi/mac80211.sh
+sed -i 's/OpenWrt/ASUS/g' package/kernel/mac80211/files/lib/wifi/mac80211.sh
 
 #echo '修改banner'
 #rm -rf package/base-files/files/etc/banner
 #cp -f ../banner package/base-files/files/etc/
 
 #echo '下载ServerChan'
-#git clone https://github.com/tty228/luci-app-serverchan ../diy/luci-app-serverchan
+git clone https://github.com/tty228/luci-app-serverchan ../diy/luci-app-serverchan
 
 #echo '集成diy目录'
-#ln -s ../../diy ./package/openwrt-packages
+ln -s ../../diy ./package/openwrt-packages
 
 
 
