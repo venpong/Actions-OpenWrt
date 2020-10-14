@@ -13,8 +13,6 @@ name: Build OpenWrt For Hiwifi4 11.1
 
 on:
   repository_dispatch:
-  release:
-    types: published
   workflow_dispatch:
     inputs:
       ssh:
