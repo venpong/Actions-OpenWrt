@@ -12,8 +12,6 @@ name: Build OpenWrt
 
 on:
   repository_dispatch:
-  release:
-    types: published
   workflow_dispatch:
     inputs:
       ssh:
