@@ -12,6 +12,8 @@ name: Test Build OpenWrt For WPR003N 1.1
 
 on:
   repository_dispatch:
+  release:
+    types: published
   workflow_dispatch:
     inputs:
       ssh:
