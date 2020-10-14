@@ -12,6 +12,8 @@ name: Build OpenWrt
 
 on:
   repository_dispatch:
+  release:
+    types: published
   workflow_dispatch:
     inputs:
       ssh:
@@ -32,7 +34,7 @@ env:
   UPLOAD_FIRMWARE: true
   UPLOAD_COWTRANSFER: true
   UPLOAD_WETRANSFER: true
-  UPLOAD_RELEASE: true
+  UPLOAD_RELEASE: false
   TZ: Asia/Shanghai
 
 jobs:
