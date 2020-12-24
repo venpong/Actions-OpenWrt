@@ -8,7 +8,7 @@
 # Description: Build OpenWrt using GitHub Actions
 #
 
-name: Build OpenWrt For Hiwifi4 1.1
+name: Build OpenWrt For Hiwifi4 11.1
 
 on:
   repository_dispatch:
