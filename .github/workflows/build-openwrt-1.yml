@@ -12,12 +12,16 @@ name: Build OpenWrt For AC58U 1.1
 
 on:
   repository_dispatch:
-  workflow_dispatch:
-    inputs:
-      ssh:
-        description: 'SSH connection to Actions'
-        required: false
-        default: 'false'
+  release:
+    types: published
+      #workflow_dispatch:
+      #inputs:
+      #ssh:
+      #description: 'SSH connection to Actions'
+    #required: false
+    #default: 'false'
+#  schedule:
+#    - cron: 0 8 * * 5
 
 env:
   REPO_URL: https://github.com/venpong/lede.git
