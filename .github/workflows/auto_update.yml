@@ -1,0 +1,19 @@
+name: auto_merge
+
+on:
+  schedule:
+    # 每周五下午16点,UTC时间比北京时间晚8小时
+    - cron: '0 8 * * fri'
+jobs:
+  update_external_airflow_fork:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: TobKed/github-forks-sync-action@master
+        with:
+          github_token: ${{ secrets.TOKEN }} # 令牌
+          upstream_repository: P3TERX/Actions-OpenWrt # 上游仓库
+          target_repository: venpong/Actions-OpenWrt # 你要推送的仓库
+          upstream_branch: main # 默认是拉取上游仓库的master分支
+          target_branch: master # 默认推送到你的仓库master分支
+          force: true # 是否强制推送
+          tags: true # 确定是否使用-tags
