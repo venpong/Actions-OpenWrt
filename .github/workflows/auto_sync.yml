@@ -1,4 +1,4 @@
-name: auto_merge
+name: auto_sync
 
 on:
   #可以在Action页面手动触发执行
