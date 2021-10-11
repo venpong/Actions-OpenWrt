@@ -1,7 +1,7 @@
 name: auto_merge
 
 on:
-  #增加这个可以在Action页面手动触发执行
+  #可以在Action页面手动触发执行
   workflow_dispatch:
   schedule:
     # 每周五下午16点,UTC时间比北京时间晚8小时
