@@ -6,6 +6,7 @@ on:
   schedule:
     # 每周五下午16点,UTC时间比北京时间晚8小时
     - cron: '0 8 * * fri'
+
 jobs:
   update_external_airflow_fork:
     runs-on: ubuntu-latest
