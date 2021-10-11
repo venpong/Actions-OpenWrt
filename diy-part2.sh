@@ -11,7 +11,7 @@
 #
 
 #echo '修改机器名称'
-#sed -i 's/OpenWrt/ACRH-17/g' package/base-files/files/bin/config_generate
+#sed -i 's/OpenWrt/Openwrt/g' package/base-files/files/bin/config_generate
 
 #echo '修改网关地址'
 #sed -i 's/192.168.1.1/192.168.2.1/g' package/base-files/files/bin/config_generate
@@ -30,14 +30,17 @@
 #ln -s ../../../luci-theme-argon ./package/lean/
 
 #echo '修改wifi名称'
-sed -i 's/OpenWrt/ASUS/g' package/kernel/mac80211/files/lib/wifi/mac80211.sh
+#sed -i 's/OpenWrt/Openwrt/g' package/kernel/mac80211/files/lib/wifi/mac80211.sh
 
 #echo '修改banner'
 #rm -rf package/base-files/files/etc/banner
 #cp -f ../banner package/base-files/files/etc/
 
+#echo '下载ServerChan'
+#git clone https://github.com/tty228/luci-app-serverchan ../diy/luci-app-serverchan
+
 #echo '下载PushBot'
-git clone -b stable https://github.com/venpong/luci-app-pushbot.git ../diy/luci-app-pushbot
+#git clone -b stable https://github.com/venpong/luci-app-pushbot.git ../diy/luci-app-pushbot
 
 #echo '集成diy目录'
 ln -s ../../diy ./package/openwrt-packages
