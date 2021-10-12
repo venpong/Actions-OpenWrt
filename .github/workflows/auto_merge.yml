@@ -12,19 +12,19 @@ env:
   #源仓库分支
   REPO_BRANCH: main
   #目标仓库分支
-  TARGET_BRANCH: master
+  TARGET_BRANCH: main
   # 时区
   TZ: Asia/Shanghai
 
 jobs:
   merge:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v2
         with:
           #切换到当前仓库的哪个分支执行
-          ref: master
+          ref: main
           fetch-depth: 0
           lfs: true
           token: ${{ secrets.TOKEN }}
