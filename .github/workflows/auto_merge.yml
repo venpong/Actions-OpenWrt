@@ -1,0 +1,50 @@
+name: auto_merge
+
+on:
+  workflow_dispatch:
+  schedule:
+    # 每天下午16点,UTC时间比北京时间晚8小时
+    - cron: '0 8 * * fri'
+
+env:
+  #源仓库地址
+  REPO_URL: https://github.com/P3TERX/Actions-OpenWrt.git
+  #源仓库分支
+  REPO_BRANCH: main
+  #目标仓库分支
+  TARGET_BRANCH: master
+  # 时区
+  TZ: Asia/Shanghai
+
+jobs:
+  merge:
+    runs-on: ubuntu-18.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          #切换到当前仓库的哪个分支执行
+          ref: master
+          fetch-depth: 0
+          lfs: true
+          token: ${{ secrets.TOKEN }}
+
+      - name: Set git identity
+        run : |
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --global user.name "github-actions[bot]"
+      - name: Load upstream commits
+        run: |
+          git pull $REPO_URL $REPO_BRANCH --log --no-commit
+      - name: Apply commit changes
+        run: |
+          if [ -f ./.git/MERGE_MSG ]; then
+          mkdir ./tmp && cp ./.git/MERGE_MSG ./tmp/message
+          sed -i "1c [bot] AutoMerging: merge all upstream's changes:" ./tmp/message
+          sed -i '/^\#.*/d' ./tmp/message
+          git commit --file="./tmp/message"
+          else
+          echo "There is no merge commits."
+          fi
+      - name: Push Commits
+        run: git push origin $TARGET_BRANCH
