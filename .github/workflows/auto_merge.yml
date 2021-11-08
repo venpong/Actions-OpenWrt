@@ -35,7 +35,7 @@ jobs:
           git config --global user.name "github-actions[bot]"
       - name: Load upstream commits
         run: |
-          git pull $REPO_URL $REPO_BRANCH --log --no-commit
+          git pull $REPO_URL $REPO_BRANCH --log --no-commit --ff-only
       - name: Apply commit changes
         run: |
           if [ -f ./.git/MERGE_MSG ]; then
