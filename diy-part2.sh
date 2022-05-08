@@ -43,7 +43,7 @@
 #git clone -b stable https://github.com/venpong/luci-app-pushbot.git ../diy/luci-app-pushbot
 
 #echo '集成diy目录'
-ln -s ../../diy ./package/openwrt-packages
+#ln -s ../../diy ./package/openwrt-packages
 
 
 
